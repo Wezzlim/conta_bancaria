@@ -2,6 +2,7 @@ package conta_bancaria;
 
 import java.util.Scanner;
 
+import conta_bancaria.model.Conta;
 import conta_bancaria.util.Cores;
 
 public class Menu {
@@ -10,7 +11,23 @@ public class Menu {
 		
         Scanner scanner = new Scanner(System.in);
         int opcao;
-
+        
+        // Criar(instanciando) um Objeto da classe Conta
+        Conta c1 = new Conta(1, 123, 1, "Wesley", 500000);
+        c1.visualizar();
+        
+        //saque
+        c1.sacar(100);
+        c1.visualizar();
+        
+        //deposito
+        c1.depositar(1000);
+        c1.visualizar();
+        
+        // alterar a propriedade titular com o set(alterar)
+        c1.setTitular("Wesley Lima");
+        c1.visualizar();
+        
         while (true) {
             System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND + "============================================");
             System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND + "              BEM VINDO AO                  ");
