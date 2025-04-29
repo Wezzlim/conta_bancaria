@@ -3,6 +3,8 @@ package conta_bancaria;
 import java.util.Scanner;
 
 import conta_bancaria.model.Conta;
+import conta_bancaria.model.ContaCorrente;
+import conta_bancaria.model.ContaPoupanca;
 import conta_bancaria.util.Cores;
 
 public class Menu {
@@ -16,6 +18,10 @@ public class Menu {
         Conta c1 = new Conta(1, 123, 1, "Wesley", 500000);
         c1.visualizar();
         
+        // instanciando um objeto da classe Conta Poupança
+        ContaPoupanca cp1 = new ContaPoupanca(3, 789, 2, "Thiago Messi", 300000, 15);
+        cp1.visualizar();
+        
         //saque
         c1.sacar(100);
         c1.visualizar();
@@ -27,6 +33,19 @@ public class Menu {
         // alterar a propriedade titular com o set(alterar)
         c1.setTitular("Wesley Lima");
         c1.visualizar();
+        
+        // instanciando um objeto da classe Conta Corrente
+        ContaCorrente cc1 = new ContaCorrente(2, 456, 1, "Renata Negrini", 600000, 60000);
+        cc1.visualizar();
+        
+        cc1.sacar(659000);
+        cc1.visualizar();
+        
+        cc1.depositar(50000);
+        cc1.visualizar();
+        
+        cp1.depositar(50000);
+        cp1.visualizar();
         
         while (true) {
             System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND + "============================================");
