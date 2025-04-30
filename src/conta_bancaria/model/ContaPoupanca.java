@@ -23,6 +23,6 @@ public class ContaPoupanca extends Conta{
 	public void visualizar() 
 	{
 		super.visualizar();
-		System.out.println("Dia de Aniversário (Rendimento da Poupança): " + this.diaDoAniversario);
+		System.out.println("Dia do Aniversário (Rendimento da Poupança): " + this.diaDoAniversario);
 	}
 }

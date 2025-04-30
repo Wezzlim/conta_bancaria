@@ -1,8 +1,11 @@
 package conta_bancaria;
 
+import java.io.IOException;
 import java.util.Scanner;
 
+import conta_bancaria.controller.ContaController;
 import conta_bancaria.model.ContaCorrente;
+import conta_bancaria.model.ContaPoupanca;
 import conta_bancaria.util.Cores;
 
 public class Menu {
@@ -10,18 +13,20 @@ public class Menu {
 	public static void main(String[] args) {
 		
         Scanner scanner = new Scanner(System.in);
-        int opcao;
-     
-        // instanciando um objeto da classe Conta Corrente
-        ContaCorrente cc1 = new ContaCorrente(2, 456, 1, "Renata Negrini", 600000, 60000);
-        cc1.visualizar();
         
-        cc1.sacar(659000);
-        cc1.visualizar();
+        ContaController contas = new ContaController();
         
-        cc1.depositar(50000);
-        cc1.visualizar();
+        int opcao, numero, agencia, tipo, aniversario;
+        String titular;
+        float saldo, limite;
         
+        // Dados para teste
+        
+        ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 123, 1, "João da Silva", 1000.00f, 100.00f);
+		contas.cadastrar(cc1);
+		
+		ContaPoupanca cp1 = new ContaPoupanca(contas.gerarNumero(), 123, 2, "Maria da Silva", 1000.00f, 12);
+		contas.cadastrar(cp1);
         
         while (true) {
             System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND + "============================================");
@@ -48,28 +53,73 @@ public class Menu {
             // Lógica de escolha
             switch (opcao) {
                 case 1:
-                    System.out.println(Cores.TEXT_GREEN + Cores.ANSI_BLACK_BACKGROUND + ">> Criando conta..." + Cores.TEXT_RESET);
+                    System.out.println(Cores.TEXT_GREEN + Cores.ANSI_BLACK_BACKGROUND + "Digite o número da conta: " + Cores.TEXT_RESET);
+                    
+                    System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o número da Agência:");
+                    agencia = scanner.nextInt();
+                    
+                    System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o nome do Titular:");
+                    scanner.skip("\\R");
+                    titular = scanner.nextLine();
+                    
+                    System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o tipo da conta (1 - CC | 2 - CP):");
+                    tipo = scanner.nextInt();
+                    
+                    System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o saldo inicial da conta:");
+                    saldo = scanner.nextFloat();
+                    
+                    switch(tipo)
+                    {
+                    case 1 ->
+                    	{
+                    		System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o limite da conta: ");
+                    		limite = scanner.nextFloat();
+                    		contas.cadastrar(new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular , saldo, limite));
+                    	}
+                    case 2 ->
+                		{
+                			System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o dia do aniversário da conta: ");
+                			aniversario = scanner.nextInt();
+                			contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), agencia, tipo, titular , saldo, aniversario));
+                		}
+                    }
+                    
+                    keyPress();
                     break;
                 case 2:
-                    System.out.println(Cores.TEXT_CYAN + Cores.ANSI_BLACK_BACKGROUND + ">> Listando contas..." + Cores.TEXT_RESET);
+                    System.out.println(Cores.TEXT_CYAN + Cores.ANSI_BLACK_BACKGROUND + ">> Listando contas: " + Cores.TEXT_RESET);
+                    contas.listarTodas();
+                    keyPress();
                     break;
                 case 3:
-                    System.out.println(Cores.TEXT_PURPLE + Cores.ANSI_BLACK_BACKGROUND + ">> Buscando conta..." + Cores.TEXT_RESET);
+                    System.out.println(Cores.TEXT_PURPLE + Cores.ANSI_BLACK_BACKGROUND + ">> Consultar dados da conta - por número:   " + Cores.TEXT_RESET);
+                   
+                    System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o número da conta:                   ");
+                    numero = scanner.nextInt();
+                    
+                    contas.procurarPorNumero(numero);
+                    
+                    keyPress();
                     break;
                 case 4:
                     System.out.println(Cores.TEXT_RED + Cores.ANSI_BLACK_BACKGROUND + ">> Atualizando dados da conta..." + Cores.TEXT_RESET);
+                    keyPress();
                     break;
                 case 5:
                     System.out.println(Cores.TEXT_YELLOW + Cores.ANSI_BLACK_BACKGROUND + ">> Apagando conta..." + Cores.TEXT_RESET);
+                    keyPress();
                     break;
                 case 6:
                     System.out.println(Cores.TEXT_BLUE + Cores.ANSI_BLACK_BACKGROUND + ">> Realizando saque..." + Cores.TEXT_RESET);
+                    keyPress();
                     break;
                 case 7:
                     System.out.println(Cores.TEXT_PURPLE + Cores.ANSI_BLACK_BACKGROUND + ">> Realizando depósito..." + Cores.TEXT_RESET);
+                    keyPress();
                     break;
                 case 8:
                     System.out.println(Cores.TEXT_CYAN + Cores.ANSI_BLACK_BACKGROUND + ">> Realizando transferência..." + Cores.TEXT_RESET);
+                    keyPress();
                     break;
                 case 9:
                 	System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND +"********************************************");
@@ -77,9 +127,11 @@ public class Menu {
                     System.out.println(Cores.TEXT_YELLOW_BOLD + Cores.ANSI_BLACK_BACKGROUND + "              VOLTE SEMPRE!                 " + Cores.TEXT_RESET);
                     sobre();
                     scanner.close();
+                    keyPress();
                     System.exit(0);
                 default:
                     System.out.println(Cores.TEXT_RED_BOLD + Cores.ANSI_BLACK_BACKGROUND + "Opção incorreta!" + Cores.TEXT_RESET);
+                    keyPress();
             }
 
             System.out.println();
@@ -93,4 +145,19 @@ public class Menu {
 			System.out.println("github.com/Wezzlim                         *");
 			System.out.println("********************************************" + Cores.TEXT_RESET);
    }
+			
+			public static void keyPress() {
+				 
+				try {
+		 
+					System.out.println(Cores.TEXT_RESET + "\n\nPressione Enter para Continuar...");
+					System.in.read();
+		 
+				} catch (IOException e) {
+		 
+					System.err.println("Ocorreu um erro ao tentar ler o teclado");
+		 
+				}
+			}
+		 
 }
