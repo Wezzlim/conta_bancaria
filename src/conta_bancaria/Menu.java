@@ -18,9 +18,9 @@ public class Menu {
         
         ContaController contas = new ContaController();
         
-        int opcao, numero, agencia, tipo, aniversario;
+        int opcao, numero, agencia, tipo, aniversario, numeroDestino;
         String titular;
-        float saldo, limite;
+        float saldo, limite, valor;
         
         // Dados para teste
         
@@ -163,14 +163,44 @@ public class Menu {
                     break;
                 case 6:
                     System.out.println(Cores.TEXT_BLUE + Cores.ANSI_BLACK_BACKGROUND + ">> Realizando saque..." + Cores.TEXT_RESET);
+                    
+                    System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o número da conta:                   ");
+                    numero = scanner.nextInt();
+                    
+                    System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o número da conta:                   ");
+                    valor = scanner.nextFloat();
+                    
+                    contas.sacar(numero, valor);
+                    
                     keyPress();
                     break;
                 case 7:
                     System.out.println(Cores.TEXT_PURPLE + Cores.ANSI_BLACK_BACKGROUND + ">> Realizando depósito..." + Cores.TEXT_RESET);
+                    
+                    System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o número da conta:                   ");
+                    numero = scanner.nextInt();
+                    
+                    System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o valor do depósito:                   ");
+                    valor = scanner.nextFloat();
+                    
+                    contas.depositar(numero, valor);
+                    
                     keyPress();
                     break;
                 case 8:
                     System.out.println(Cores.TEXT_CYAN + Cores.ANSI_BLACK_BACKGROUND + ">> Realizando transferência..." + Cores.TEXT_RESET);
+                    
+                    System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o número da conta de Origem:                   ");
+                    numero = scanner.nextInt();
+                    
+                    System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o número da conta de Destino:                   ");
+                    numeroDestino = scanner.nextInt();
+                    
+                    System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o valor do depósito:                   ");
+                    valor = scanner.nextFloat();
+                    
+                    contas.transferir(numero, numeroDestino, valor);
+                    
                     keyPress();
                     break;
                 case 9:
