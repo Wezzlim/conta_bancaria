@@ -1,9 +1,11 @@
 package conta_bancaria;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Scanner;
 
 import conta_bancaria.controller.ContaController;
+import conta_bancaria.model.Conta;
 import conta_bancaria.model.ContaCorrente;
 import conta_bancaria.model.ContaPoupanca;
 import conta_bancaria.util.Cores;
@@ -103,10 +105,60 @@ public class Menu {
                     break;
                 case 4:
                     System.out.println(Cores.TEXT_RED + Cores.ANSI_BLACK_BACKGROUND + ">> Atualizando dados da conta..." + Cores.TEXT_RESET);
+                    
+                    //informar o numero da conta
+                    System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o número da conta:                   ");
+                    numero = scanner.nextInt();
+                    
+                    // checar se a conta existe
+                    Optional<Conta> conta = contas.buscarNaCollection(numero);
+                    
+                    // existe?
+                    if(conta.isPresent())
+                    {
+                    	
+                    	// atualizar os dados
+                    	System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o número da Agência:");
+                        agencia = scanner.nextInt();
+                        
+                        System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o nome do Titular:");
+                        scanner.skip("\\R");
+                        titular = scanner.nextLine();
+                        
+                        // recuperar o tipo da conta
+                        tipo = conta.get().getTipo();
+                        
+                        System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o novo saldo da conta:");
+                        saldo = scanner.nextFloat();
+                        
+                        // identificar o tipo
+                        switch(tipo)
+                        {
+                         case 1 -> // se for conta corrente
+                        	{
+                        		System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o limite da conta: ");
+                        		limite = scanner.nextFloat();
+                        		contas.atualizar(new ContaCorrente(numero, agencia, tipo, titular , saldo, limite));
+                        	}
+                         case 2 -> // se for conta poupança
+                    		{
+                    			System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o dia do aniversário da conta: ");
+                    			aniversario = scanner.nextInt();
+                    			contas.atualizar(new ContaPoupanca(numero, agencia, tipo, titular , saldo, aniversario));
+                    		}
+                        }
+                    	
+                    }else // caso não existe a conta
+                    	System.out.printf("\n Aconta número %d não existe!", numero);
+                    
                     keyPress();
                     break;
                 case 5:
                     System.out.println(Cores.TEXT_YELLOW + Cores.ANSI_BLACK_BACKGROUND + ">> Apagando conta..." + Cores.TEXT_RESET);
+                    System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND + "Digite o número da conta:                   ");
+                    numero = scanner.nextInt();
+                    
+                    contas.deletar(numero);
                     keyPress();
                     break;
                 case 6:
