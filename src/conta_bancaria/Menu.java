@@ -33,7 +33,7 @@ public class Menu {
         while (true) {
             System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND + "============================================");
             System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND + "              BEM VINDO AO                  ");
-            System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND + "          BANCO SANTANDER COM S             ");
+            System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND + "            BANCO IMOBILIÁRIO               ");
             System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND + "============================================" + Cores.TEXT_RESET);
 
             // Opções (formatadas com mesmo tamanho de linha)
@@ -45,7 +45,8 @@ public class Menu {
             System.out.println(Cores.TEXT_BLUE_BOLD_BRIGHT + Cores.ANSI_BLACK_BACKGROUND + String.format("%-44s", "6 - Sacar") + Cores.TEXT_RESET);
             System.out.println(Cores.TEXT_PURPLE_BOLD_BRIGHT + Cores.ANSI_BLACK_BACKGROUND + String.format("%-44s", "7 - Depositar") + Cores.TEXT_RESET);
             System.out.println(Cores.TEXT_CYAN_BOLD_BRIGHT + Cores.ANSI_BLACK_BACKGROUND + String.format("%-44s", "8 - Transferir valores entre Contas") + Cores.TEXT_RESET);
-            System.out.println(Cores.TEXT_RED_BOLD + Cores.ANSI_BLACK_BACKGROUND + String.format("%-44s", "9 - |Sair|") + Cores.TEXT_RESET);
+            System.out.println(Cores.TEXT_WHITE_BOLD_BRIGHT + Cores.ANSI_BLACK_BACKGROUND + String.format("%-44s", "9 - Listar contas (Por Titular)") + Cores.TEXT_RESET);
+            System.out.println(Cores.TEXT_RED_BOLD + Cores.ANSI_BLACK_BACKGROUND + String.format("%-44s", "0 - |Sair|") + Cores.TEXT_RESET);
 
             // Input
             System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND +"********************************************");
@@ -204,12 +205,23 @@ public class Menu {
                     keyPress();
                     break;
                 case 9:
+                	System.out.println(Cores.TEXT_WHITE + "Consultar contas por titular\n");
+                	
+                	System.out.println("Digite o nome do titular: ");
+                	scanner.skip("\\R");
+                	titular = scanner.nextLine();
+                	
+                	contas.listarPorTitular(titular);
+                	
+                	keyPress();
+                	break;
+                case 0:
                 	System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND +"********************************************");
-                    System.out.println(Cores.TEXT_YELLOW_BOLD + Cores.ANSI_BLACK_BACKGROUND + "     O Banco Santander com S agradece!      " + Cores.TEXT_RESET);
-                    System.out.println(Cores.TEXT_YELLOW_BOLD + Cores.ANSI_BLACK_BACKGROUND + "              VOLTE SEMPRE!                 " + Cores.TEXT_RESET);
+                    System.out.println(Cores.TEXT_YELLOW_BOLD + Cores.ANSI_BLACK_BACKGROUND + "       O Banco Imobiliário agradece!        " + Cores.TEXT_RESET);
+                    System.out.println(Cores.TEXT_YELLOW_BOLD + Cores.ANSI_BLACK_BACKGROUND + "              VOLTE SEMPRE                  " + Cores.TEXT_RESET);
                     sobre();
                     scanner.close();
-                    keyPress();
+                    //keyPress();
                     System.exit(0);
                 default:
                     System.out.println(Cores.TEXT_RED_BOLD + Cores.ANSI_BLACK_BACKGROUND + "Opção incorreta!" + Cores.TEXT_RESET);
